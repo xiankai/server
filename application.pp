@@ -111,6 +111,17 @@ file { "/var/lib/php/session":
     require => Package['php-fpm']
 }
 
+##########
+#mysql
+##########
+class { 'mysql::server':
+  config_hash => { 'root_password' => 'rF2v6tx4qYQ1a3Y6CBs643iE1aaok1jxHmA1ZinPiHvKv86KwRyz7PmWKqSFcRo' }
+}
+
+file { "/etc/my.cnf":
+    require => mysql
+	source => "file:///repos/server/conf/my.cnf",
+}
 
 ##########
 #misc
