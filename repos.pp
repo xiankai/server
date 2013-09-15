@@ -17,6 +17,6 @@ exec { "vcsrepo":
 	command => "sudo puppet module install puppetlabs/vcsrepo"
 }
 
-exec { "vcsrepo":
+exec { "mysql":
 	command => "sudo puppet module install puppetlabs/mysql"
 }
