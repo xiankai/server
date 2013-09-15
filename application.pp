@@ -50,7 +50,7 @@ file { "/etc/nginx/conf.d/bespectacled.conf":
 file { "/var/log/nginx":
   require => Package['nginx'],
   ensure => "directory",
-  recurse => true
+  recurse => true,
   mode   => 777
 }
 
