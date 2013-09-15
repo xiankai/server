@@ -13,35 +13,35 @@ service { "nginx":
 }
 
 file { "/etc/nginx/nginx.conf":
-  source =>   "file:///repos/server/files/nginx.conf",
+  source =>   "file:///repos/server/conf/nginx.conf",
   notify => Service["nginx"],
   require => Package['nginx'],
   mode   => 644
 }
 
 file { "/etc/nginx/conf.d/default.conf":
-  source =>   "file:///repos/server/files/default.conf",
+  source =>   "file:///repos/server/conf/default.conf",
   notify => Service["nginx"],
   require => Package['nginx'],
   mode   => 644
 }
 
 file { "/etc/nginx/conf.d/wordpress.conf":
-  source =>   "file:///repos/server/files/wordpress.conf",
+  source =>   "file:///repos/server/conf/wordpress.conf",
   notify => Service["nginx"],
   require => Package['nginx'],
   mode   => 644
 }
 
 file { "/etc/nginx/conf.d/phpmyadmin.conf":
-  source =>   "file:///repos/server/files/phpmyadmin.conf",
+  source =>   "file:///repos/server/conf/phpmyadmin.conf",
   notify => Service["nginx"],
   require => Package['nginx'],
   mode   => 644
 }
 
 file { "/etc/nginx/conf.d/bespectacled.conf":
-  source =>   "file:///repos/server/files/default.conf",
+  source =>   "file:///repos/server/conf/default.conf",
   notify => Service["nginx"],
   require => Package['nginx'],
   mode   => 644
@@ -95,14 +95,14 @@ package {"php-curl":
 }
 
 file { "/etc/php.ini":
-  source =>   "file:///repos/server/files/php.ini",
+  source =>   "file:///repos/server/conf/php.ini",
   require => Package['php-fpm'],
   notify => Service['php-fpm'],
   mode   => 644
 }
 
 file { "/etc/php-fpm.d/www.conf":
-  source =>   "file:///repos/server/files/www.conf",
+  source =>   "file:///repos/server/conf/www.conf",
   require => Package['php-fpm'],
   notify => Service['php-fpm'],
   mode   => 644
