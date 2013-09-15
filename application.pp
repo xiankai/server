@@ -90,7 +90,7 @@ package {"php-mcrypt":
 }
 
 package {"php-curl":
-    ensure => present
+    ensure => present,
 	notify => Service['php-fpm']
 }
 
