@@ -134,23 +134,23 @@ package {"curl":
 #bespectacled
 ##########
 
-file { "/root/.ssh/id_rsa":
-	source => "file:///repos/server/conf/id_rsa",
-}
-
-file { "/root/.ssh/config":
-	source => "file:///repos/server/conf/config",
-}
-
-vcsrepo { "/www/bespectacled":
-	ensure   => latest,
-	owner    => $owner,
-	group    => $owner,
-	provider => git,
-	require  => [ Package["git"] ],
-	source   => "ssh://github.com/xiankai/bespectacled.git",
-	revision => 'master',
-}
+#file { "/root/.ssh/id_rsa":
+#	source => "file:///repos/server/conf/id_rsa",
+#}
+#
+#file { "/root/.ssh/config":
+#	source => "file:///repos/server/conf/config",
+#}
+#
+#vcsrepo { "/www/bespectacled":
+#	ensure   => latest,
+#	owner    => $owner,
+#	group    => $owner,
+#	provider => git,
+#	require  => [ Package["git"] ],
+#	source   => "ssh://github.com/xiankai/bespectacled.git",
+#	revision => 'master',
+#}
 
 ##########
 #phpmyadmin
