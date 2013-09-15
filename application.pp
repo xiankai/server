@@ -89,11 +89,6 @@ package {"php-mcrypt":
   notify => Service['php-fpm']
 }
 
-package {"php-curl":
-    ensure => present,
-	notify => Service['php-fpm']
-}
-
 file { "/etc/php.ini":
   source =>   "file:///repos/server/conf/php.ini",
   require => Package['php-fpm'],
