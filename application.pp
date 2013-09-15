@@ -168,7 +168,6 @@ vcsrepo { "/www/wordpress":
 	owner    => $owner,
 	group    => $owner,
 	provider => git,
-	require  => [ Package["git"] ],
 	source   => "https://github.com/WordPress/WordPress.git",
 	revision => 'master',
 }
