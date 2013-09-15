@@ -119,8 +119,8 @@ class { 'mysql::server':
 }
 
 file { "/etc/my.cnf":
-    require => mysql
-	source => "file:///repos/server/conf/my.cnf",
+    require => mysql,
+	source => "file:///repos/server/conf/my.cnf"
 }
 
 ##########
