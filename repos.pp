@@ -13,10 +13,6 @@ yumrepo { "epel":
 	enabled => 1
 }
 
-exec { "vcsrepo":
-	command => "sudo puppet module install puppetlabs/vcsrepo"
-}
+exec { "puppet module install puppetlabs/vcsrepo": }
 
-exec { "mysql":
-	command => "sudo puppet module install puppetlabs/mysql"
-}
+exec { "puppet module install puppetlabs/mysql": }
