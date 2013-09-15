@@ -135,7 +135,6 @@ package {"curl":
 #	owner    => $owner,
 #	group    => $owner,
 #	provider => git,
-#	require  => [ Package["git"] ],
 #	source   => "ssh://github.com/xiankai/bespectacled.git",
 #	revision => 'master',
 #}
@@ -149,7 +148,6 @@ vcsrepo { "/www/phpmyadmin":
 	owner    => $owner,
 	group    => $owner,
 	provider => git,
-	require  => [ Package["git"] ],
 	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
 	revision => 'master',
 }
