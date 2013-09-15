@@ -112,18 +112,6 @@ file { "/var/lib/php/session":
 }
 
 ##########
-#mysql
-##########
-class { 'mysql::server':
-  config_hash => { 'root_password' => 'rF2v6tx4qYQ1a3Y6CBs643iE1aaok1jxHmA1ZinPiHvKv86KwRyz7PmWKqSFcRo' }
-}
-
-file { "/etc/my.cnf":
-    require => mysql,
-	source => "file:///repos/server/conf/my.cnf"
-}
-
-##########
 #misc
 ##########
 package {"curl":
@@ -167,7 +155,7 @@ vcsrepo { "/www/phpmyadmin":
 }
 
 file { "/www/phpmyadmin/config.inc.php":
-	require => [ vcsrepo["/www/phpmyadmin"] ],
+	require => [ Vcsrepo["/www/phpmyadmin"] ],
 	source => "file:///www/phpmyadmin/config.sample.inc.php",
 }
 
