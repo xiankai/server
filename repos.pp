@@ -2,13 +2,16 @@
 #Setup repos
 ############
 yumrepo { "nginx":
+	name => "Official Nginx Packages",
 	baseurl => "http://nginx.org/packages/centos/6/$basearch/",
 	gpgcheck => 0,
 	enabled => 1
 }
 
 yumrepo { "epel":
-	baseurl => "http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm",
+	name => "Extra Packages for Enterprise Linux 6 - $basearch",
+	baseurl => "http://download.fedoraproject.org/pub/epel/6/$basearch",
+	mirrorlist => "https://mirrors.fedoraproject.org/metalink?repo=epel-6&amp;arch=$basearch",
 	gpgcheck => 0,
 	enabled => 1
 }
