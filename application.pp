@@ -41,7 +41,7 @@ file { "/etc/nginx/conf.d/phpmyadmin.conf":
 }
 
 file { "/etc/nginx/conf.d/bespectacled.conf":
-  source =>   "file:///repos/server/conf/default.conf",
+  source =>   "file:///repos/server/conf/bespectacled.conf",
   notify => Service["nginx"],
   require => Package['nginx'],
   mode   => 644
@@ -109,4 +109,12 @@ file { "/var/lib/php/session":
     owner  => "nginx",
     mode   => 700,
     require => Package['php-fpm']
+}
+
+
+##########
+#misc
+##########
+package {"curl":
+    ensure => present,
 }
