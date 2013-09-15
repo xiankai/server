@@ -129,3 +129,58 @@ file { "/etc/my.cnf":
 package {"curl":
     ensure => present,
 }
+
+##########
+#bespectacled
+##########
+
+file { "/root/.ssh/id_rsa":
+	source => "file:///repos/server/conf/id_rsa",
+}
+
+file { "/root/.ssh/config":
+	source => "file:///repos/server/conf/config",
+}
+
+vcsrepo { "/www/bespectacled":
+	ensure   => latest,
+	owner    => $owner,
+	group    => $owner,
+	provider => git,
+	require  => [ Package["git"] ],
+	source   => "ssh://github.com/xiankai/bespectacled.git",
+	revision => 'master',
+}
+
+##########
+#phpmyadmin
+##########
+
+vcsrepo { "/www/phpmyadmin":
+	ensure   => latest,
+	owner    => $owner,
+	group    => $owner,
+	provider => git,
+	require  => [ Package["git"] ],
+	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
+	revision => 'master',
+}
+
+file { "/www/phpmyadmin/config.inc.php":
+	require => [ vcsrepo["/www/phpmyadmin"] ],
+	source => "file:///www/phpmyadmin/config.sample.inc.php",
+}
+
+##########
+#phpmyadmin
+##########
+
+vcsrepo { "/www/wordpress":
+	ensure   => latest,
+	owner    => $owner,
+	group    => $owner,
+	provider => git,
+	require  => [ Package["git"] ],
+	source   => "https://github.com/WordPress/WordPress.git",
+	revision => 'master',
+}
