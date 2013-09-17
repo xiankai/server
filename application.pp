@@ -26,27 +26,6 @@ file { "/etc/nginx/conf.d/default.conf":
   mode   => 644
 }
 
-file { "/etc/nginx/conf.d/wordpress.conf":
-  source =>   "file:///repos/server/conf/wordpress.conf",
-  notify => Service["nginx"],
-  require => Package['nginx'],
-  mode   => 644
-}
-
-file { "/etc/nginx/conf.d/phpmyadmin.conf":
-  source =>   "file:///repos/server/conf/phpmyadmin.conf",
-  notify => Service["nginx"],
-  require => Package['nginx'],
-  mode   => 644
-}
-
-file { "/etc/nginx/conf.d/bespectacled.conf":
-  source =>   "file:///repos/server/conf/bespectacled.conf",
-  notify => Service["nginx"],
-  require => Package['nginx'],
-  mode   => 644
-}
-
 file { "/var/log/nginx":
   require => Package['nginx'],
   ensure => "directory",
@@ -116,56 +95,4 @@ file { "/var/lib/php/session":
 ##########
 package {"curl":
     ensure => present,
-}
-
-##########
-#bespectacled
-##########
-
-#file { "/root/.ssh/id_rsa":
-#	source => "file:///repos/server/conf/id_rsa",
-#}
-#
-#file { "/root/.ssh/config":
-#	source => "file:///repos/server/conf/config",
-#}
-#
-#vcsrepo { "/www/bespectacled":
-#	ensure   => latest,
-#	owner    => $owner,
-#	group    => $owner,
-#	provider => git,
-#	source   => "ssh://github.com/xiankai/bespectacled.git",
-#	revision => 'master',
-#}
-
-##########
-#phpmyadmin
-##########
-
-vcsrepo { "/www/phpmyadmin":
-	ensure   => latest,
-	owner    => $owner,
-	group    => $owner,
-	provider => git,
-	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
-	revision => 'master',
-}
-
-file { "/www/phpmyadmin/config.inc.php":
-	require => [ Vcsrepo["/www/phpmyadmin"] ],
-	source => "file:///www/phpmyadmin/config.sample.inc.php",
-}
-
-##########
-#phpmyadmin
-##########
-
-vcsrepo { "/www/wordpress":
-	ensure   => latest,
-	owner    => $owner,
-	group    => $owner,
-	provider => git,
-	source   => "https://github.com/WordPress/WordPress.git",
-	revision => 'master',
 }
