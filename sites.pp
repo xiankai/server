@@ -9,13 +9,14 @@ define ftp_user ($pass) {
 		require	=> [ Group['filetransfer'] ],
 		shell	=> '/usr/bin/rssh',
 		password	=> $pass,
+		home	=> '/www/$title'
 	}
 	
 	file { "/www/$title":
 		ensure	=> directory,
 		recurse	=> true,
-		owner	=> $title,
-		group	=> filetransfer,
+		owner	=> root,
+		group	=> root,
 		require	=> [ User[$title] ],
 	}
 }
