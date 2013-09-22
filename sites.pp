@@ -1,4 +1,70 @@
 ##########
+#classes
+##########
+
+define ftp_user ($pass) {
+	user { "$title":
+		ensure	=> present,
+		groups	=> filetransfer,
+		require	=> [ Group['filetransfer'] ],
+		shell	=> '/usr/bin/rssh',
+		password	=> $pass,
+	}
+	
+	file { "/www/$title":
+		ensure	=> directory,
+		recurse	=> true,
+		owner	=> $title,
+		group	=> filetransfer,
+		require	=> [ User[$title] ],
+	}
+}
+
+define wordpress ($domain = '', $owner) {
+	file { "/www/$owner/$title":
+		ensure 	=> directory,
+		recurse	=> true,
+		require => [ Ftp_user[$owner] ],
+		owner	=> $owner,
+		group	=> filetransfer,
+	}
+
+	file { "/etc/nginx/conf.d/$title.conf":
+		content	=> template("/repos/server/conf/wordpress.erb"),
+		notify	=> Service['nginx'],
+		mode	=> 644,
+	}
+}
+
+define website ($domain = '', $owner) {
+	file { "/www/$owner/$title":
+		ensure 	=> directory,
+		recurse	=> true,
+		require => [ Ftp_user[$owner] ],
+		owner	=> $owner,
+		group	=> filetransfer,
+	}
+
+	file { "/etc/nginx/conf.d/$title.conf":
+		content	=> template("/repos/server/conf/www.erb"),
+		notify	=> Service['nginx'],
+		mode	=> 644,
+	}
+}
+
+##########
+#required
+##########
+
+service { 'sshd':
+	ensure => 'running',
+}
+
+service { 'nginx':
+	ensure => 'running',
+}
+
+##########
 #filetransfer
 ##########
 
@@ -6,15 +72,13 @@ group { "filetransfer":
 	ensure 	=> present,
 }
 
-file { "/etc/ssh/sshd_config":
-	source	=> "file:///repos/server/conf/sshd_config",
-	mode	=> 600,
-	notify	=> Service['sshd'],
-}
+##########
+#kj
+##########
 
-##########
-#bespectacled
-##########
+ftp_user { 'kj':
+	pass => '',
+}
 
 #vcsrepo { "/www/bespectacled":
 #	ensure   => latest,
@@ -25,16 +89,9 @@ file { "/etc/ssh/sshd_config":
 #	revision => 'master',
 #}
 #
-#file { "/etc/nginx/conf.d/bespectacled.conf":
-#	source =>   "file:///repos/server/conf/bespectacled.conf",
-#	notify => Service["nginx"],
-#	require => Package['nginx'],
-#	mode   => 644,
+#website { 'bespectacled':
+#	owner => 'kj',
 #}
-
-##########
-#phpmyadmin
-##########
 
 vcsrepo { "/www/phpmyadmin":
 	ensure   => latest,
@@ -50,21 +107,12 @@ file { "/www/phpmyadmin/config.inc.php":
 	source => "file:///www/phpmyadmin/config.sample.inc.php",
 }
 
-file { "/etc/nginx/conf.d/phpmyadmin.conf":
-	source =>   "file:///repos/server/conf/phpmyadmin.conf",
-	notify => Service["nginx"],
-	require => Package['nginx'],
-	mode   => 644,
+website { 'phpmyadmin':
+	owner => 'kj',
 }
 
-##########
-#wordpress
-##########
-
-user { "wordpress":
-	ensure	=> present,
-	groups	=> wordpress,
-	password	=> wordpress,
+ftp_user { "wordpress":
+	pass	=> 'qgfh.4ssHCQHs',
 }
 
 vcsrepo { "/www/wordpress":
@@ -77,37 +125,52 @@ vcsrepo { "/www/wordpress":
 	revision	=> 'master',
 }
 
-file { "/etc/nginx/conf.d/wordpress.conf":
-	source	=>   "file:///repos/server/conf/wordpress.conf",
-	notify	=> Service["nginx"],
-	require	=> Package['nginx'],
-	mode	=> 644,
+wordpress { 'wordpress':
+	owner	=> 'kj',
 }
 
-##########
-#deanishes
-##########
-
-user { "deanishes":
-	require	=> Group['filetranfer'],
-	ensure	=> present,
-	groups	=> wordpress,
-	shell	=> /sbin/nologin,
-	password	=> deanishes,
+# Dean
+ftp_user { 'deanishes':
+	pass	=> 'JR.R3..N0LkJc',
 }
 
-file { "/www/deanishes":
-	ensure 	=> directory,
-	source	=> "file:///www/wordpress",
-	recurse	=> true,
-	require => [ Vcsrepo['/www/wordpress'], User['deanishes'], Group['filetransfer'] ],
-	owner	=> deanishes,
-	group	=> filetransfer,
+wordpress { 'deanishes':
+	domain	=> 'deanishes.com',
+	owner	=> 'deanishes',
 }
 
-file { "/etc/nginx/conf.d/deanishes.conf":
-	source =>   "file:///repos/server/conf/deanishes.conf",
-	notify => Service["nginx"],
-	require => Package['nginx'],
-	mode   => 644,
+# Yas
+ftp_user { 'yasmin':
+	pass	=> 'gkboZn2A0nvcI',
+}
+
+wordpress { 'portfolio':
+	domain	=> 'yasminhabayeb.com',
+	owner	=> 'yasmin',
+}
+
+wordpress { 'creatibia':
+	domain	=> 'creatibia.com',
+	owner	=> 'yasmin',
+}
+
+website { 'mybb':
+	domain	=> 'forum.creatibia.com',
+	owner	=> 'yasmin',
+}
+
+# Vini
+
+ftp_user { 'vinithar':
+	pass	=> 'pce6GnqAMbAN2',
+}
+
+wordpress { 'vinithar':
+	owner	=> 'vinithar',
+}
+
+# Mass
+
+ftp_user { 'mass':
+	pass	=> 'ScXnMajpq3hLA',
 }

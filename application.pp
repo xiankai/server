@@ -91,6 +91,29 @@ file { "/var/lib/php/session":
 }
 
 ##########
+#chroot
+##########
+
+service { 'sshd':
+	ensure => 'running',
+}
+
+file { "/etc/ssh/sshd_config":
+	source	=> "file:///repos/server/conf/sshd_config",
+	mode	=> 600,
+	notify	=> Service['sshd'],
+}
+
+package { 'rssh':
+	ensure	=> present,
+}
+
+file {	'/etc/rssh.conf':
+	ensure	=> present,
+	content	=> 'allowsftp'
+}
+
+##########
 #misc
 ##########
 package {"curl":
