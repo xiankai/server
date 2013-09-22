@@ -78,7 +78,7 @@ group { "filetransfer":
 ##########
 
 ftp_user { 'kj':
-	pass => '',
+	pass => 'ZzhAUccUZ4u5A',
 }
 
 #vcsrepo { "/www/bespectacled":
@@ -89,10 +89,10 @@ ftp_user { 'kj':
 #	source   => "ssh://github.com/xiankai/bespectacled.git",
 #	revision => 'master',
 #}
-#
-#website { 'bespectacled':
-#	owner => 'kj',
-#}
+
+website { 'bespectacled':
+	owner => 'kj',
+}
 
 vcsrepo { "/www/phpmyadmin":
 	ensure   => latest,
