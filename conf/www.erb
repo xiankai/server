@@ -6,6 +6,8 @@ server {
 	error_log /www/<%= @owner %>/logs/<%= @title %>-error.log;
 
 	root /www/<%= @owner %>/<%= @title %>;
+	
+	index index.php;
 
     location / {
         # Check if a file exists, or route it to index.php.

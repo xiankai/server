@@ -7,6 +7,8 @@ server {
 
 	root /www/<%= @owner %>/<%= @title %>;
 	
+	index index.php;
+	
 	# Global restrictions configuration file.
 	# Designed to be included in any server {} block.</p>
 	location = /favicon.ico {
