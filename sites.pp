@@ -131,22 +131,23 @@ website { 'bespectacled':
 	owner => 'kj',
 }
 
-vcsrepo { "/www/phpmyadmin":
+website { 'phpmyadmin':
+	owner => 'kj',
+}
+
+vcsrepo { "/www/kj/phpmyadmin":
 	ensure   => latest,
 	owner    => $owner,
 	group    => $owner,
 	provider => git,
 	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
-	revision => 'master',
+	revision => 'RELEASE_4_0_7',
 }
 
-file { "/www/phpmyadmin/config.inc.php":
+file { "/www/kj/phpmyadmin/config.inc.php":
+	ensure   => present,
 	require => [ Vcsrepo["/www/phpmyadmin"] ],
-	source => "file:///www/phpmyadmin/config.sample.inc.php",
-}
-
-website { 'phpmyadmin':
-	owner => 'kj',
+	source => "file:///repos/server/conf/config.inc.php",
 }
 
 ftp_user { "wordpress":
