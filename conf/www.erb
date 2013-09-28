@@ -14,7 +14,7 @@ server {
         try_files $uri $uri/ /index.php;
     }
 
-    location ~ index\.php$ {
+    location ~ \.php$ {
         fastcgi_pass        127.0.0.1:9000;
         include             fastcgi_params;
         fastcgi_param       PATH_INFO $fastcgi_script_name;
