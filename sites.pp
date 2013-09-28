@@ -146,7 +146,7 @@ vcsrepo { "/www/kj/phpmyadmin":
 
 file { "/www/kj/phpmyadmin/config.inc.php":
 	ensure   => present,
-	require => [ Vcsrepo["/www/phpmyadmin"] ],
+	require => [ Vcsrepo["/www/kj/phpmyadmin"] ],
 	source => "file:///repos/server/conf/config.inc.php",
 }
 
