@@ -35,6 +35,9 @@ $cfg['Servers'][$i]['compress'] = false;
 $cfg['Servers'][$i]['extension'] = 'mysqli';
 $cfg['Servers'][$i]['AllowNoPassword'] = false;
 
+$sessionDuration = 60*60*4;
+ini_set('session.gc_maxlifetime', $sessionDuration);
+$cfg['LoginCookieValidity'] = $sessionDuration;
 /*
  * phpMyAdmin configuration storage settings.
  */
