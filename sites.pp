@@ -154,16 +154,6 @@ ftp_user { "wordpress":
 	pass	=> 'qgfh.4ssHCQHs',
 }
 
-vcsrepo { "/www/wordpress":
-	require	=> [ User['wordpress'], Group['filetransfer'] ],
-	ensure	=> latest,
-	owner	=> wordpress,
-	group	=> filetransfer,
-	source 	=> "https://github.com/WordPress/WordPress.git",
-	provider	=> git,
-	revision	=> 'master',
-}
-
 wordpress { 'wordpress':
 	owner	=> 'kj',
 }
