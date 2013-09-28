@@ -90,6 +90,15 @@ file { "/var/lib/php/session":
     require => Package['php-fpm']
 }
 
+# for sessions
+file { "/var/lib/php":
+	require	=> Package['php-fpm'],
+	ensure	=> "directory",
+	recurse	=> true,
+	owner	=> "nginx",
+	group	=> "nginx",
+}
+
 ##########
 #chroot
 ##########
