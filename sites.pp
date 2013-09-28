@@ -39,14 +39,14 @@ define wordpress ($domain = '', $owner) {
 		group	=> filetransfer,
 	}
 	
-	file { "/www/$owner/logs/$title-access.log"
+	file { "/www/$owner/logs/$title-access.log":
 		ensure	=> present,
 		owner	=> $owner,
 		group	=> filetransfer,
 		mode	=> 644,
 	}
 	
-	file { "/www/$owner/logs/$title-error.log"
+	file { "/www/$owner/logs/$title-error.log":
 		ensure	=> present,
 		owner	=> $owner,
 		group	=> filetransfer,
