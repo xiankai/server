@@ -19,6 +19,15 @@ define ftp_user ($pass) {
 		group	=> root,
 		require	=> [ User[$title] ],
 	}
+	
+	file { "/www/$title/logs":
+		ensure	=> directory,
+		recurse	=> true,
+		owner	=> $title,
+		group	=> filetransfer,
+		mode	=> 644,
+		require	=> [ User[$title], Group['filetransfer'] ],
+	}
 }
 
 define wordpress ($domain = '', $owner) {
@@ -28,6 +37,20 @@ define wordpress ($domain = '', $owner) {
 		require => [ Ftp_user[$owner] ],
 		owner	=> $owner,
 		group	=> filetransfer,
+	}
+	
+	file { "/www/$owner/logs/$title-access.log"
+		ensure	=> present,
+		owner	=> $owner,
+		group	=> filetransfer,
+		mode	=> 644,
+	}
+	
+	file { "/www/$owner/logs/$title-error.log"
+		ensure	=> present,
+		owner	=> $owner,
+		group	=> filetransfer,
+		mode	=> 644,
 	}
 
 	file { "/etc/nginx/conf.d/$title.conf":
@@ -44,6 +67,18 @@ define website ($domain = '', $owner) {
 		require => [ Ftp_user[$owner] ],
 		owner	=> $owner,
 		group	=> filetransfer,
+	}
+	
+	file { "/www/$owner/logs/$title-access.log"
+		owner	=> $owner,
+		group	=> filetransfer,
+		mode	=> 644,
+	}
+	
+	file { "/www/$owner/logs/$title-error.log"
+		owner	=> $owner,
+		group	=> filetransfer,
+		mode	=> 644,
 	}
 
 	file { "/etc/nginx/conf.d/$title.conf":
