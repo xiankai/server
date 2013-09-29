@@ -203,3 +203,13 @@ wordpress { 'vinithar':
 ftp_user { 'mass':
 	pass	=> 'ScXnMajpq3hLA',
 }
+
+# Adam
+
+ftp_user { 'adam':
+	pass	=> 'bWKTX2Q1.ZBTM',
+}
+
+website { 'adam':
+	owner	=> 'adam',
+}
