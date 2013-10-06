@@ -120,7 +120,7 @@ vcsrepo { "/www/bespectacled":
 	owner    => $owner,
 	group    => $owner,
 	provider => git,
-	source   => "ssh://github.com/xiankai/Laravel.git",
+	source   => "https://github.com/xiankai/Laravel.git",
 	revision => 'master',
 }
 
