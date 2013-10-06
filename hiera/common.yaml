@@ -30,9 +30,9 @@ wordpress:
     owner: vinithar
 
 website:
-  bespectacled:
+  laravel:
     owner: kj
-    path: bespectacled/public
+    path: laravel/public
   phpmyadmin:
     owner: kj
   mybb:
