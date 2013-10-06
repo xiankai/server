@@ -140,9 +140,14 @@ file { "/www/kj/phpmyadmin/config.inc.php":
 }
 
 class sites {
-	create_resources('ftp_user', hiera('ftp_user', []))
-	create_resources('wordpress', hiera('wordpress', []))
-	create_resources('website', hiera('website', []))
+	$ftp_users = hiera('ftp_user', [])
+	create_resources('ftp_user', $ftp_users)
+	
+	$wordpress = hiera('wordpress', [])
+	create_resources('wordpress', $wordpress)
+	
+	$websites = hiera('website', [])
+	create_resources('website', $websites)
 }
 
 class { 'sites': }
