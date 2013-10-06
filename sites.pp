@@ -139,7 +139,7 @@ file { "/www/kj/phpmyadmin/config.inc.php":
 	source => "file:///repos/server/conf/config.inc.php",
 }
 
-class { 'sites': 
+class sites {
 	$ftp_users = hiera('ftp_user', [])
 	create_resources('ftp_user', $ftp_users)
 	
@@ -149,3 +149,5 @@ class { 'sites':
 	$websites = hiera('website', [])
 	create_resources('website', $websites)
 }
+
+class { 'sites': }
