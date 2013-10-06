@@ -1,0 +1,7 @@
+---
+:backends:
+  - yaml
+:yaml:
+  :datadir: /repos/server/hiera
+:hierarchy:
+  - common

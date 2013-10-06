@@ -5,7 +5,7 @@ server {
 	access_log /www/<%= @owner %>/logs/<%= @title %>-access.log slim;
 	error_log /www/<%= @owner %>/logs/<%= @title %>-error.log;
 
-	root /www/<%= @owner %>/<%= @title %>;
+	root /www/<%= @owner %>/<%= @path %>;
 	
 	index index.php;
 

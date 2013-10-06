@@ -1,5 +1,5 @@
 ##########
-#classes
+# defined types
 ##########
 
 define ftp_user ($pass) {
@@ -60,7 +60,8 @@ define wordpress ($domain = '', $owner) {
 	}
 }
 
-define website ($domain = '', $owner) {
+define website ($domain = '', $path = $title, $owner) {
+
 	file { "/www/$owner/$title":
 		ensure 	=> directory,
 		recurse	=> true,
@@ -91,7 +92,7 @@ define website ($domain = '', $owner) {
 }
 
 ##########
-#required
+# services
 ##########
 
 service { 'sshd':
@@ -111,28 +112,16 @@ group { "filetransfer":
 }
 
 ##########
-#kj
+# 
 ##########
 
-ftp_user { 'kj':
-	pass => 'ZzhAUccUZ4u5A',
-}
-
-#vcsrepo { "/www/bespectacled":
-#	ensure   => latest,
-#	owner    => $owner,
-#	group    => $owner,
-#	provider => git,
-#	source   => "ssh://github.com/xiankai/bespectacled.git",
-#	revision => 'master',
-#}
-
-website { 'bespectacled':
-	owner => 'kj',
-}
-
-website { 'phpmyadmin':
-	owner => 'kj',
+vcsrepo { "/www/bespectacled":
+	ensure   => latest,
+	owner    => $owner,
+	group    => $owner,
+	provider => git,
+	source   => "ssh://github.com/xiankai/Laravel.git",
+	revision => 'master',
 }
 
 vcsrepo { "/www/kj/phpmyadmin":
@@ -150,66 +139,13 @@ file { "/www/kj/phpmyadmin/config.inc.php":
 	source => "file:///repos/server/conf/config.inc.php",
 }
 
-ftp_user { "wordpress":
-	pass	=> 'qgfh.4ssHCQHs',
-}
-
-wordpress { 'wordpress':
-	owner	=> 'kj',
-}
-
-# Dean
-ftp_user { 'deanishes':
-	pass	=> 'JR.R3..N0LkJc',
-}
-
-wordpress { 'deanishes':
-	domain	=> 'deanishes.com',
-	owner	=> 'deanishes',
-}
-
-# Yas
-ftp_user { 'yasmin':
-	pass	=> 'gkboZn2A0nvcI',
-}
-
-wordpress { 'portfolio':
-	domain	=> 'yasminhabayeb.com',
-	owner	=> 'yasmin',
-}
-
-wordpress { 'creatibia':
-	domain	=> 'creatibia.com',
-	owner	=> 'yasmin',
-}
-
-website { 'mybb':
-	domain	=> 'forum.creatibia.com',
-	owner	=> 'yasmin',
-}
-
-# Vini
-
-ftp_user { 'vinithar':
-	pass	=> 'pce6GnqAMbAN2',
-}
-
-wordpress { 'vinithar':
-	owner	=> 'vinithar',
-}
-
-# Mass
-
-ftp_user { 'mass':
-	pass	=> 'ScXnMajpq3hLA',
-}
-
-# Adam
-
-ftp_user { 'adam':
-	pass	=> 'bWKTX2Q1.ZBTM',
-}
-
-website { 'adam':
-	owner	=> 'adam',
+class { 'sites': 
+	$ftp_users = hiera('ftp_user', [])
+	create_resources('ftp_user', $ftp_users)
+	
+	$wordpress = hiera('wordpress', [])
+	create_resources('wordpress', $wordpress)
+	
+	$websites = hiera('website', [])
+	create_resources('website', $websites)
 }

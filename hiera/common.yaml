@@ -1,0 +1,42 @@
+ftp_user:
+  kj:
+    pass: 'ZzhAUccUZ4u5A'
+  wordpress:
+    pass: 'qgfh.4ssHCQHs'
+  deanishes:
+    pass: 'JR.R3..N0LkJc'
+  yasmin:
+    pass: 'gkboZn2A0nvcI'
+  vinithar:
+    pass: 'pce6GnqAMbAN2'
+  mass:
+    pass: 'ScXnMajpq3hLA'
+  adam:
+    pass: 'bWKTX2Q1.ZBTM'
+	
+wordpress:
+  wordpress:
+	owner: kj
+  deanishes:
+    owner: deanishes
+    domain: deanishes.com
+  portfolio:
+    owner: yasmin
+    domain: yasminhabayeb.com
+  creatibia:
+    owner: yasmin
+    domain: creatibia.com
+  vinithar:
+    owner: vinithar
+
+website:
+  bespectacled:
+    owner: kj
+    path: bespectacled/public
+  phpmyadmin:
+    owner: kj
+  mybb:
+    owner: yasmin,
+    domain: forum.creatibia.com
+  adam:
+    owner: adam
