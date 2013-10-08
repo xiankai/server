@@ -1,6 +1,6 @@
 server {
 	listen       80;
-	server_name <% if @domain != "" -%><%= @domain %> www.<%= @domain -%><% end -%><% if @title == "bespectacled" -%> www.bespectacledcyborg.com bespectacledcyborg.com<% end -%><% if @title != "bespectacled" -%> <%= @title %>.bespectacledcyborg.com<% end -%>;	
+	server_name <%= @domain != "" ? "#{domain} " : "" %><%= @title == "laravel" ? "www.bespectacledcyborg.com bespectacledcyborg.com" : "#{title}.mydomain.com" %>;
 	
 	access_log /www/<%= @owner %>/logs/<%= @title %>-access.log slim;
 	error_log /www/<%= @owner %>/logs/<%= @title %>-error.log;
