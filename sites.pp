@@ -121,6 +121,11 @@ file { "/www/kj/phpmyadmin/config.inc.php":
 	source => "file:///repos/server/conf/config.inc.php",
 }
 
+file { "/www/kj/laravel/app/storage":
+	ensure	=> directory,
+	mode	=> 777,
+}
+
 class sites {
 	$ftp_users = hiera('ftp_user', [])
 	create_resources('ftp_user', $ftp_users)
