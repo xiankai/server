@@ -1,106 +1,93 @@
 ############
-#Setup nginx
+# nginx
 ############
 
-package {"nginx":
-  ensure => present
+class nginx::config {
+	require Package["nginx"]
+
+	file { "/etc/nginx/nginx.conf":
+	  source =>   "file:///repos/server/conf/nginx.conf",
+	  mode   => 644
+	}
+
+	file { "/etc/nginx/conf.d/default.conf":
+	  source =>   "file:///repos/server/conf/default.conf",
+	  mode   => 644
+	}
+
+	file { "/var/log/nginx":
+	  ensure => "directory",
+	  recurse => true,
+	  mode   => 777
+	}
 }
 
-service { "nginx": 
-    enable => true, 
-    ensure => "running",
-    require => Package['nginx']
-}
+class nginx {
+	require nginx::config
 
-file { "/etc/nginx/nginx.conf":
-  source =>   "file:///repos/server/conf/nginx.conf",
-  notify => Service["nginx"],
-  require => Package['nginx'],
-  mode   => 644
-}
-
-file { "/etc/nginx/conf.d/default.conf":
-  source =>   "file:///repos/server/conf/default.conf",
-  notify => Service["nginx"],
-  require => Package['nginx'],
-  mode   => 644
-}
-
-file { "/var/log/nginx":
-  require => Package['nginx'],
-  ensure => "directory",
-  recurse => true,
-  mode   => 777
-}
-
-##########
-#Setup php
-##########
-
-package {"php-fpm":
-  ensure => present
-}
-
-service { "php-fpm": 
-    enable => true, 
-    ensure => "running",
-    require => Package['php-fpm']    
-}
-
-package {"php-mysql":
-  ensure => present,
-  notify => Service['php-fpm']
-}
-
-package {"php-cli":
-  ensure => present,
-  notify => Service['php-fpm']
-}
-
-#not required for debian?
-package {"php-mbstring":
-  ensure => present,
-  notify => Service['php-fpm']
-}
-
-package {"php-mcrypt":
-  ensure => present,
-  notify => Service['php-fpm']
-}
-
-file { "/etc/php.ini":
-  source =>   "file:///repos/server/conf/php.ini",
-  require => Package['php-fpm'],
-  notify => Service['php-fpm'],
-  mode   => 644
-}
-
-file { "/etc/php-fpm.d/www.conf":
-  source =>   "file:///repos/server/conf/www.conf",
-  require => Package['php-fpm'],
-  notify => Service['php-fpm'],
-  mode   => 644
-}
-
-# apache user specified in /etc/php-fpm.d/www.conf
-file { "/var/lib/php/session":
-    ensure => "directory",
-    owner  => "nginx",
-    mode   => 700,
-    require => Package['php-fpm']
-}
-
-# for sessions
-file { "/var/lib/php":
-	require	=> Package['php-fpm'],
-	ensure	=> "directory",
-	recurse	=> true,
-	owner	=> "nginx",
-	group	=> "nginx",
+	service { "nginx": 
+		enable => true, 
+		ensure => running,
+	}
 }
 
 ##########
-#chroot
+# php
+##########
+
+class php::core {
+	package {"php54w-fpm":
+	  ensure => present
+	}
+
+	package {"php54w-mysql":
+	  ensure => present
+	}
+
+	package {"php54w-cli":
+	  ensure => present
+	}
+
+	package {"php54w-mbstring":
+	  ensure => present
+	}
+
+	package {"php54w-mcrypt":
+	  ensure => present
+	}
+}
+
+class php::config {
+	require php::core
+
+	file { "/etc/php.ini":
+	  source =>   "file:///repos/server/conf/php.ini",
+	  mode   => 644
+	}
+
+	file { "/etc/php-fpm.d/www.conf":
+	  source =>   "file:///repos/server/conf/www.conf",
+	  mode   => 644
+	}
+
+	#http://serverfault.com/questions/70634/what-permissions-ownership-to-set-on-php-sessions-folder-when-running-fastcgi
+	file { "/var/lib/php/session":
+		owner	=> 'nobody',
+		group	=> 'nogroup'
+	}
+}
+
+class php {
+	require php::config
+
+	service { "php54w-fpm": 
+		enable => true, 
+		ensure => "running"
+	}
+}
+
+##########
+# chroot
 ##########
 
 service { 'sshd':
@@ -128,3 +115,8 @@ file {	'/etc/rssh.conf':
 package {"curl":
     ensure => present,
 }
+
+##########
+# and off we go
+##########
+include php, nginx
