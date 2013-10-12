@@ -2,8 +2,14 @@
 # nginx
 ############
 
+class nginx::core {
+	package { "nginx":
+		ensure	=> present
+	}
+}
+
 class nginx::config {
-	require Package["nginx"]
+	require nginx::core
 
 	file { "/etc/nginx/nginx.conf":
 	  source =>   "file:///repos/server/conf/nginx.conf",
@@ -13,12 +19,6 @@ class nginx::config {
 	file { "/etc/nginx/conf.d/default.conf":
 	  source =>   "file:///repos/server/conf/default.conf",
 	  mode   => 644
-	}
-
-	file { "/var/log/nginx":
-	  ensure => "directory",
-	  recurse => true,
-	  mode   => 777
 	}
 }
 
@@ -110,13 +110,30 @@ file {	'/etc/rssh.conf':
 }
 
 ##########
-#misc
+# git
 ##########
-package {"curl":
-    ensure => present,
+
+class git {
+	user { "git":
+		ensure	=> present,
+		shell	=> '/bin/git-shell',
+	}
+	
+	file { "/home/git":
+		ensure	=> directory
+	}
+	~>
+	file { "/home/git/.ssh":
+		ensure	=> directory
+	}
+	~>
+	file { "/home/git/.ssh/id_rsa":
+		ensure	=> file,
+		source	=> 'file:///repos/server/conf/id_rsa'
+	}
 }
 
 ##########
 # and off we go
 ##########
-include php, nginx
+include php, nginx, git
