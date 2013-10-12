@@ -21,17 +21,12 @@ define ftp_user ($pass) {
 	
 	file { "/www/$title/logs":
 		ensure	=> directory,
-		require	=> [ User[$title], Group['filetransfer'] ],
 	}
 }
 
 define wordpress ($domain = '', $owner) {
 	file { "/www/$owner/$title":
-		ensure 	=> directory,
-		recurse	=> true,
-		require => [ Ftp_user[$owner] ],
-		owner	=> $owner,
-		group	=> filetransfer,
+		ensure 	=> directory
 	}
 	
 	file { "/www/$owner/logs/$title-access.log":
@@ -73,6 +68,10 @@ define website ($domain = '', $path = $title, $owner) {
 	}
 }
 
+define permissions ($owner) {
+	exec { "/bin/chmod 664 -R /www/$owner/$name": }
+}
+
 ##########
 # services
 ##########
@@ -98,21 +97,24 @@ group { "filetransfer":
 ##########
 
 vcsrepo { "/www/kj/laravel":
-	ensure   => latest,
-	owner    => $owner,
-	group    => $owner,
+	ensure   => present,
 	provider => git,
 	source   => "https://github.com/xiankai/Laravel.git",
 	revision => 'master',
 }
 
 vcsrepo { "/www/kj/phpmyadmin":
-	ensure   => latest,
-	owner    => $owner,
-	group    => $owner,
+	ensure   => present,
 	provider => git,
 	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
 	revision => 'RELEASE_4_0_7',
+}
+
+vcsrepo { "/www/kj/wordpress":
+	ensure   => present,
+	provider => git,
+	source   => "https://github.com/wordpress/wordpress",
+	revision => '3.6.1',
 }
 
 file { "/www/kj/phpmyadmin/config.inc.php":
@@ -123,6 +125,7 @@ file { "/www/kj/phpmyadmin/config.inc.php":
 
 file { "/www/kj/laravel/app/storage":
 	ensure	=> directory,
+	require	=> [ Vcsrepo["/www/kj/laravel"] ],
 	mode	=> 777,
 }
 
@@ -137,4 +140,14 @@ class sites {
 	create_resources('website', $websites)
 }
 
-class { 'sites': }
+class setup_sites {
+	require sites
+	
+	$wordpress = hiera('wordpress', [])
+	create_resources('permissions', $wordpress)
+	
+	$websites = hiera('website', [])
+	create_resources('permissions', $websites)
+}
+
+class { "setup_sites": }
