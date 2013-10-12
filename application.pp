@@ -12,12 +12,12 @@ class nginx::config {
 	require nginx::core
 
 	file { "/etc/nginx/nginx.conf":
-	  source =>   "file:///repos/server/conf/nginx.conf",
+	  source =>   "file:///repos/server/files/nginx.conf",
 	  mode   => 644
 	}
 
 	file { "/etc/nginx/conf.d/default.conf":
-	  source =>   "file:///repos/server/conf/default.conf",
+	  source =>   "file:///repos/server/files/default.conf",
 	  mode   => 644
 	}
 }
@@ -61,19 +61,18 @@ class php::config {
 	require php::core
 
 	file { "/etc/php.ini":
-	  source =>   "file:///repos/server/conf/php.ini",
+	  source =>   "file:///repos/server/files/php.ini",
 	  mode   => 644
 	}
 
 	file { "/etc/php-fpm.d/www.conf":
-	  source =>   "file:///repos/server/conf/www.conf",
+	  source =>   "file:///repos/server/files/www.conf",
 	  mode   => 644
 	}
 
 	#http://serverfault.com/questions/70634/what-permissions-ownership-to-set-on-php-sessions-folder-when-running-fastcgi
 	file { "/var/lib/php/session":
 		owner	=> 'nobody',
-		group	=> 'nogroup'
 	}
 }
 
@@ -95,7 +94,7 @@ service { 'sshd':
 }
 
 file { "/etc/ssh/sshd_config":
-	source	=> "file:///repos/server/conf/sshd_config",
+	source	=> "file:///repos/server/files/sshd_config",
 	mode	=> 600,
 	notify	=> Service['sshd'],
 }
@@ -129,7 +128,7 @@ class git {
 	~>
 	file { "/home/git/.ssh/id_rsa":
 		ensure	=> file,
-		source	=> 'file:///repos/server/conf/id_rsa'
+		source	=> 'file:///repos/server/files/id_rsa'
 	}
 }
 

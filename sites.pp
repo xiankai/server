@@ -38,7 +38,7 @@ define wordpress ($domain = '', $owner) {
 	}
 
 	file { "/etc/nginx/conf.d/$title.conf":
-		content	=> template("/repos/server/conf/wordpress.erb"),
+		content	=> template("/repos/server/files/wordpress.erb"),
 		notify	=> Service['nginx'],
 		mode	=> 644,
 	}
@@ -62,7 +62,7 @@ define website ($domain = '', $path = $title, $owner) {
 	}
 
 	file { "/etc/nginx/conf.d/$title.conf":
-		content	=> template("/repos/server/conf/www.erb"),
+		content	=> template("/repos/server/files/www.erb"),
 		notify	=> Service['nginx'],
 		mode	=> 644,
 	}
@@ -120,7 +120,7 @@ vcsrepo { "/www/kj/wordpress":
 file { "/www/kj/phpmyadmin/config.inc.php":
 	ensure   => present,
 	require => [ Vcsrepo["/www/kj/phpmyadmin"] ],
-	source => "file:///repos/server/conf/config.inc.php",
+	source => "file:///repos/server/files/config.inc.php",
 }
 
 file { "/www/kj/laravel/app/storage":
