@@ -28,6 +28,8 @@ wordpress:
     domain: creatibia.com
   vinithar:
     owner: vinithar
+  mass:
+    owner: mass
 
 website:
   old:
