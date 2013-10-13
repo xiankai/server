@@ -38,7 +38,7 @@ define wordpress ($domain = '', $owner) {
 	}
 
 	file { "/etc/nginx/conf.d/$title.conf":
-		content	=> template("/repos/server/files/wordpress.erb"),
+		content	=> template("/repos/server/templates/wordpress.erb"),
 		notify	=> Service['nginx'],
 		mode	=> 644,
 	}
@@ -62,7 +62,7 @@ define website ($domain = '', $path = $title, $owner) {
 	}
 
 	file { "/etc/nginx/conf.d/$title.conf":
-		content	=> template("/repos/server/files/www.erb"),
+		content	=> template("/repos/server/templates/www.erb"),
 		notify	=> Service['nginx'],
 		mode	=> 644,
 	}
