@@ -89,23 +89,25 @@ class php {
 # chroot
 ##########
 
-service { 'sshd':
-	ensure => 'running',
-}
+class chroot {
+	service { 'sshd':
+		ensure => 'running',
+	}
 
-file { "/etc/ssh/sshd_config":
-	source	=> "file:///repos/server/files/sshd_config",
-	mode	=> 600,
-	notify	=> Service['sshd'],
-}
+	file { "/etc/ssh/sshd_config":
+		source	=> "file:///repos/server/files/sshd_config",
+		mode	=> 600,
+		notify	=> Service['sshd'],
+	}
 
-package { 'rssh':
-	ensure	=> present,
-}
+	package { 'rssh':
+		ensure	=> present,
+	}
 
-file {	'/etc/rssh.conf':
-	ensure	=> present,
-	content	=> 'allowsftp'
+	file {	'/etc/rssh.conf':
+		ensure	=> present,
+		content	=> 'allowsftp'
+	}
 }
 
 ##########
@@ -115,7 +117,7 @@ file {	'/etc/rssh.conf':
 class git {
 	user { "git":
 		ensure	=> present,
-		shell	=> '/bin/git-shell',
+		shell	=> '/usr/bin/git-shell',
 	}
 	
 	file { "/home/git":
@@ -135,4 +137,4 @@ class git {
 ##########
 # and off we go
 ##########
-include php, nginx, git
+include php, nginx, git, chroot
