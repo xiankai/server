@@ -68,7 +68,7 @@ define website ($domain = '', $path = $title, $owner) {
 	}
 }
 
-define permissions ($owner) {
+define permissions ($owner, $domain = '', $path = '') {
 	exec { "/bin/chmod 664 -R /www/$owner/$name": }
 }
 
