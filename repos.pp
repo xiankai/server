@@ -21,7 +21,8 @@ yumrepo { "epel":
 yumrepo { "webtatic":
 	name => "webtatic",
 	descr	=> "webtatic",
-	baseurl => "http://repo.webtatic.com/yum/el6/$basearch/",
+	baseurl => "http://repo.webtatic.com/yum/el6/\$basearch/",
+	mirrorlist => "http://mirror.webtatic.com/yum/el6/\$basearch/mirrorlist",
 	gpgcheck => 0,
 	enabled => 1
 }
