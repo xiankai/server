@@ -30,6 +30,9 @@ wordpress:
     owner: vinithar
   mass:
     owner: mass
+  ayos:
+    owner: kj
+    domain: ayearofstructure.com
 
 website:
   old:
