@@ -127,6 +127,7 @@ file { "/www/kj/laravel/app/storage":
 	ensure	=> directory,
 	# require	=> [ Vcsrepo["/www/kj/laravel"] ],
 	mode	=> 777,
+	recurse => true,
 }
 
 class sites {
