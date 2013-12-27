@@ -96,36 +96,36 @@ group { "filetransfer":
 # 
 ##########
 
-vcsrepo { "/www/kj/laravel":
-	ensure   => present,
-	provider => git,
-	source   => "https://github.com/xiankai/Laravel.git",
-	revision => 'master',
-}
+# vcsrepo { "/www/kj/laravel":
+# 	ensure   => present,
+# 	provider => git,
+# 	source   => "https://github.com/xiankai/Laravel.git",
+# 	revision => 'master',
+# }
 
-vcsrepo { "/www/kj/phpmyadmin":
-	ensure   => present,
-	provider => git,
-	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
-	revision => 'RELEASE_4_0_7',
-}
+# vcsrepo { "/www/kj/phpmyadmin":
+# 	ensure   => present,
+# 	provider => git,
+# 	source   => "https://github.com/phpmyadmin/phpmyadmin.git",
+# 	revision => 'RELEASE_4_0_7',
+# }
 
-vcsrepo { "/www/kj/wordpress":
-	ensure   => present,
-	provider => git,
-	source   => "https://github.com/wordpress/wordpress",
-	revision => '3.6.1',
-}
+# vcsrepo { "/www/kj/wordpress":
+# 	ensure   => present,
+# 	provider => git,
+# 	source   => "https://github.com/wordpress/wordpress",
+# 	revision => '3.6.1',
+# }
 
 file { "/www/kj/phpmyadmin/config.inc.php":
 	ensure   => present,
-	require => [ Vcsrepo["/www/kj/phpmyadmin"] ],
+	# require => [ Vcsrepo["/www/kj/phpmyadmin"] ],
 	source => "file:///repos/server/files/config.inc.php",
 }
 
 file { "/www/kj/laravel/app/storage":
 	ensure	=> directory,
-	require	=> [ Vcsrepo["/www/kj/laravel"] ],
+	# require	=> [ Vcsrepo["/www/kj/laravel"] ],
 	mode	=> 777,
 }
 
