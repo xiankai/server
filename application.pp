@@ -79,7 +79,7 @@ class php::config {
 class php {
 	require php::config
 
-	service { "php54w-fpm": 
+	service { "php-fpm": 
 		enable => true, 
 		ensure => "running"
 	}
@@ -138,3 +138,7 @@ class git {
 # and off we go
 ##########
 include php, nginx, git, chroot
+
+service { 'mysqld' :
+	ensure => running
+}
