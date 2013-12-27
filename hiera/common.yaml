@@ -13,7 +13,9 @@ ftp_user:
     pass: 'ScXnMajpq3hLA'
   adam:
     pass: 'bWKTX2Q1.ZBTM'
-    
+  universe:
+    pass: 'ZW8kvTS1PYMt.'
+
 wordpress:
   wordpress:
     owner: kj
@@ -32,7 +34,10 @@ wordpress:
     owner: mass
   ayos:
     owner: kj
-    domain: ayearofstructure.com
+    domain: ayearofstructure.com    
+  setkyar:
+    owner: universe
+    domain: setkyar.com
 
 website:
   old:
@@ -47,3 +52,6 @@ website:
     domain: forum.creatibia.com
   adam:
     owner: adam
+  universe:
+    owner: universe
+    domain: laravel.setkyar.com
