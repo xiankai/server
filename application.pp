@@ -70,9 +70,9 @@ class php::config {
 	  mode   => 644
 	}
 
-	#http://serverfault.com/questions/70634/what-permissions-ownership-to-set-on-php-sessions-folder-when-running-fastcgi
 	file { "/var/lib/php/session":
-		owner	=> 'nobody',
+		owner	=> 'nginx',
+		mode 	=> 700,
 	}
 }
 
