@@ -36,23 +36,23 @@ class nginx {
 ##########
 
 class php::core {
-	package {"php54w-fpm":
+	package {"php55w-fpm":
 	  ensure => present
 	}
 
-	package {"php54w-mysql":
+	package {"php55w-mysql":
 	  ensure => present
 	}
 
-	package {"php54w-cli":
+	package {"php55w-cli":
 	  ensure => present
 	}
 
-	package {"php54w-mbstring":
+	package {"php55w-mbstring":
 	  ensure => present
 	}
 
-	package {"php54w-mcrypt":
+	package {"php55w-mcrypt":
 	  ensure => present
 	}
 }
