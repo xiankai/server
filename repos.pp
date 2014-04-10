@@ -34,11 +34,11 @@ exec { "/usr/bin/puppet module install puppetlabs/mysql": }
 #hiera
 file { "/etc/hiera.yaml":
 	ensure => link,
-	target => "/applications/repos/hiera.yaml",
+	target => "/repos/server/hiera.yaml",
 }
 
 #setup hiera for puppet
 file { "/etc/puppet/hiera.yaml":
 	ensure => link,
-	target => "/applications/repos/hiera.yaml",
+	target => "/repos/server/hiera.yaml",
 }
