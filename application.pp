@@ -139,6 +139,11 @@ class git {
 ##########
 include php, nginx, git, chroot
 
+package { 'mysql':
+	ensure => present,
+}
+
 service { 'mysqld' :
-	ensure => running
+	require => Package['mysql'],
+	ensure => running,
 }
