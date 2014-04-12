@@ -137,13 +137,4 @@ class git {
 ##########
 # and off we go
 ##########
-include php, nginx, git, chroot
-
-package { 'mysql':
-	ensure => present,
-}
-
-service { 'mysqld' :
-	require => Package['mysql'],
-	ensure => running,
-}
+include php, nginx, git, chroot, mysql
