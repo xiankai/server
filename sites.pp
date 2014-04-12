@@ -142,13 +142,24 @@ class sites {
 }
 
 class setup_sites {
-	require sites
+	contain sites
+
+	#base dir first
+	file { '/www':
+		ensure => directory,
+		before => Class['sites'],
+	}
+
+	#permissions after sites
+	$defaults = {
+		require => [ File['/www'], Class['sites'] ],
+	}
 	
-	$wordpress = hiera('wordpress', [])
-	create_resources('permissions', $wordpress)
+	$wordpress = hiera('wordpress')
+	create_resources('permissions', $wordpress, $defaults)
 	
-	$websites = hiera('website', [])
-	create_resources('permissions', $websites)
+	$websites = hiera('website')
+	create_resources('permissions', $websites, $defaults)
 }
 
 class { "setup_sites": }
