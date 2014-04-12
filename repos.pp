@@ -27,10 +27,6 @@ yumrepo { "webtatic":
 	enabled => 1
 }
 
-exec { "/usr/bin/puppet module install puppetlabs/vcsrepo": }
-
-exec { "/usr/bin/puppet module install puppetlabs/mysql": }
-
 #hiera
 file { "/etc/hiera.yaml":
 	ensure => link,
@@ -42,3 +38,16 @@ file { "/etc/puppet/hiera.yaml":
 	ensure => link,
 	target => "/repos/server/hiera.yaml",
 }
+
+define puppet_module {
+	$vars = split($name, '/')
+	exec { "/usr/bin/puppet module install ${name}":
+		creates => "/etc/puppet/modules/${vars[1]}/manifests/init.pp",
+	}
+}
+
+puppet_module { [
+	"puppetlabs/mysql",
+	"puppetlabs/vcsrepo",
+	"AlexCline/dirtree",
+]: }
