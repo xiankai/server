@@ -137,4 +137,4 @@ class git {
 ##########
 # and off we go
 ##########
-include php, nginx, git, chroot, mysql
+include php, nginx, git, chroot, mysql::server
