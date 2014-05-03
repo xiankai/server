@@ -111,30 +111,6 @@ class chroot {
 }
 
 ##########
-# git
-##########
-
-class git {
-	user { "git":
-		ensure	=> present,
-		shell	=> '/usr/bin/git-shell',
-	}
-	
-	file { "/home/git":
-		ensure	=> directory
-	}
-	~>
-	file { "/home/git/.ssh":
-		ensure	=> directory
-	}
-	~>
-	file { "/home/git/.ssh/id_rsa":
-		ensure	=> file,
-		source	=> 'file:///repos/server/files/id_rsa'
-	}
-}
-
-##########
 # and off we go
 ##########
-include php, nginx, git, chroot, mysql::server
+include php, nginx, chroot, mysql::server
