@@ -1,7 +1,8 @@
 ---
 :backends:
-  - yaml
-:yaml:
-  :datadir: /repos/server/hiera
-:hierarchy:
-  - common
+  - etcd
+:http:
+  :host: 127.0.0.1
+  :port: 4001
+  :paths:
+    - /configuration/common

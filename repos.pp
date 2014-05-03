@@ -50,4 +50,5 @@ puppet_module { [
 	"puppetlabs/mysql",
 	"puppetlabs/vcsrepo",
 	"AlexCline/dirtree",
+	"garethr/hiera_etcd",
 ]: }
