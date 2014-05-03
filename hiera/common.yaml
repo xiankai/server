@@ -22,22 +22,11 @@ wordpress:
   deanishes:
     owner: deanishes
     domain: deanishes.com
-  portfolio:
-    owner: yasmin
-    domain: yasminhabayeb.com
-  creatibia:
-    owner: yasmin
-    domain: creatibia.com
-  vinithar:
-    owner: vinithar
   mass:
     owner: mass
   ayos:
     owner: kj
-    domain: ayearofstructure.com    
-  setkyar:
-    owner: universe
-    domain: setkyar.com
+    domain: ayearofstructure.com
 
 website:
   old:
@@ -47,13 +36,7 @@ website:
     path: laravel/public
   phpmyadmin:
     owner: kj
-  mybb:
-    owner: yasmin
-    domain: forum.creatibia.com
   adam:
     owner: adam
-  universe:
-    owner: universe
-    domain: laravel.setkyar.com
   mandrill:
     owner: kj
