@@ -2,6 +2,6 @@
 :backends:
   - yaml
 :yaml:
-  :datadir: /repos/server/hiera
+  :datadir: /repos/config/hiera
 :hierarchy:
   - common
